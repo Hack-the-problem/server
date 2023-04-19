@@ -16,6 +16,10 @@ jobs:
       matrix:
         node-version: [18.16.0]
 
+    permissions:
+      id-token: write
+      contents: read
+
     steps:
       - name: Checkout source code.
         uses: actions/checkout@v2
