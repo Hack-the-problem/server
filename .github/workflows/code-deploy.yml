@@ -24,9 +24,13 @@ jobs:
       - name: Checkout source code.
         uses: actions/checkout@v2
 
+      - name: find directory
+        run: |
+          ls-al
+
       - name: create .env file
         run: |
-          cd /github/workspace
+          cd  ${{ github.workspace }} 
           cat << EOF > .env
           OPEN_API_KEY="test"
           EOF
