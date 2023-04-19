@@ -1,0 +1,46 @@
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    strategy:
+      matrix:
+        node-version: [18.16.0]
+
+    steps:
+      - name: Checkout source code.
+        uses: actions/checkout@v2
+        
+      - name: Clean temp directory
+        run: |
+          rm -rf *
+          cp -r $GITHUB_WORKSPACE .
+      
+      - name: zip codes
+        run: tar cvfz ./htp-was.tar.gz *
+
+      - name: AWS configure credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: upload to S3
+        run: aws s3 cp --region ap-northeast-2 ./htp-was.tar.gz s3://htp-github/was/
+
+      - name: deploy with AWS codeDeploy
+        run: aws deploy create-deployment
+          --application-name htp-codedeploy
+          --deployment-config-name CodeDeployDefault.OneAtATime
+          --deployment-group-name htp-was
+          --s3-location bucket=htp-github,bundleType=tgz,key=was/htp-was.tar.gz
