@@ -26,6 +26,7 @@ jobs:
 
       - name: create .env file
         run: |
+          cd /home/ubuntu/htp-was
           cat << EOF > .env
           OPEN_API_KEY="test"
           EOF
