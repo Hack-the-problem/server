@@ -1,10 +1,12 @@
+# deprecated
+
 name: deploy
 
 on:
   push:
-    branches: [main]
+    branches: [develop]
   pull_request:
-    branches: [main]
+    branches: [develop]
 
   workflow_dispatch:
 

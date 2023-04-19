@@ -7,12 +7,10 @@ export class ChatService {
 
   async getChatResponse(id, input): Promise<string> {
     const chain = this.langchainService.getChain(id);
-    const response = await chain.call({
+    const { response } = await chain.call({
       input,
     });
 
-    console.log(response);
-
-    return response.response;
+    return response;
   }
 }
