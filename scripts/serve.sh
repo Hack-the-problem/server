@@ -2,7 +2,7 @@
 cd /home/ubuntu/htp-was
 
 # install package
-yarn build
+sudo yarn build
 
 # copy
 pm2 start dist/main.js --name htp-was

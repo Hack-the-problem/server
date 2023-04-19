@@ -5,6 +5,9 @@ sudo apt-get install -y nodejs
 # Install NestJS CLI
 sudo npm install -g @nestjs/cli
 
+# Install PM2
+sudo npm install -g pm2 
+
 # Install dependencies
 cd /home/ubuntu/htp-was
 sudo yarn install
