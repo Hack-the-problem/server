@@ -28,7 +28,8 @@ jobs:
         run: |
           cd ${{ github.workspace }}
           cat << EOF > .env
-          OPEN_API_KEY="test"
+          OPEN_API_KEY=${{ secrets.OPEN_API_KEY }}
+          MONGO_URI=${{ secrets.MONGO_URI }}
           EOF
           chmod 644 .env
 
