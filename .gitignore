@@ -4,6 +4,7 @@
 
 # environments
 .env
+/secret
 
 # Logs
 logs
