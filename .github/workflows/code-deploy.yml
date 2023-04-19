@@ -30,6 +30,11 @@ jobs:
           cat << EOF > .env
           OPEN_API_KEY=${{ secrets.OPEN_API_KEY }}
           MONGO_URI=${{ secrets.MONGO_URI }}
+          KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}
+          KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }}
+          SERVER_URL=${{ secrets.SERVER_URL }}
+          CLIENT_URL=${{ secrets.CLIENT_URL }}
+          JWT_SECRET=${{ secrets.JWT_SECRET }}
           EOF
           chmod 644 .env
 
