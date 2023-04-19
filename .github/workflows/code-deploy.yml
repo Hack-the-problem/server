@@ -26,12 +26,14 @@ jobs:
 
       - name: create .env file
         run: |
+          cd ${{ github.workspace }}
           cat << EOF > .env
           OPEN_API_KEY="test"
           EOF
+          chmod 644 .env
 
       - name: zip codes
-        run: tar cvfz ./htp-was.tar.gz ./*
+        run: tar cvfz ./htp-was.tar.gz .
 
       - name: AWS configure credentials
         uses: aws-actions/configure-aws-credentials@v2
