@@ -10,6 +10,9 @@ export class ChatRoom {
   _id: Types.ObjectId;
 
   @Prop()
+  userId: Types.ObjectId;
+
+  @Prop()
   chats: ChatDocument[];
 }
 

@@ -7,6 +7,9 @@ import { ChatModule } from './chat/chat.module';
 import { LangchainModule } from './langchain/langchain.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { LoggerMiddleware } from './middlewares/logger';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
@@ -19,6 +22,9 @@ import { LoggerMiddleware } from './middlewares/logger';
     ChatRoomModule,
     ChatModule,
     LangchainModule,
+    PassportModule,
+    AuthModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
