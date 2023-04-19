@@ -24,6 +24,13 @@ jobs:
       - name: Checkout source code.
         uses: actions/checkout@v2
 
+      - name: create .env file
+        run: |
+          cat << EOF > .env
+          OPEN_API_KEY=${{ secrets.OPEN_API_KEY }}
+          MONGO_URI=${{ secrets.MONGO_URI }}
+          EOF
+
       - name: zip codes
         run: tar cvfz ./htp-was.tar.gz *
 

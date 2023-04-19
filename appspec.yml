@@ -9,3 +9,9 @@ permissions:
     owner: ubuntu
     group: ubuntu
     mode: 755
+
+hooks:
+  AfterInstall:
+    - location: serve.sh
+      timeout: 300
+      runas: ubuntu
