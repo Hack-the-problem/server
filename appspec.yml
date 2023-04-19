@@ -11,7 +11,11 @@ permissions:
     mode: 755
 
 hooks:
+  BeforeInstall:
+    - location: scripts/dependencies.sh
+      timeout: 300
+      runas: ubuntu
   AfterInstall:
-    - location: serve.sh
+    - location: scripts/serve.sh
       timeout: 300
       runas: ubuntu
