@@ -7,4 +7,4 @@ sudo npm install -g @nestjs/cli
 
 # Install dependencies
 cd /home/ubuntu/htp-was
-yarn install
+sudo yarn install
