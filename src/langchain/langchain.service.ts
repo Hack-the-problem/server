@@ -14,7 +14,6 @@ import { CallbackManager } from 'langchain/callbacks';
 export class LangchainService {
   chainTable = {};
   private model = new ChatOpenAI({
-    streaming: true,
     callbackManager: CallbackManager.fromHandlers({
       async handleLLMNewToken(token: string) {
         process.stdout.write(token);
@@ -49,5 +48,10 @@ export class LangchainService {
       this.chainTable[id] = this.createChain();
     }
     return this.chainTable[id];
+  }
+
+  deleteChain(id) {
+    delete this.chainTable[id];
+    console.log('삭제되었습니다.', `result: ${this.chainTable[id]}`);
   }
 }
