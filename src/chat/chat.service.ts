@@ -1,17 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { LangchainService } from '../langchain/langchain.service';
+import { InjectModel } from '@nestjs/mongoose';
+import { Chat } from './chat.schema';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class ChatService {
-  constructor(private readonly langchainService: LangchainService) {}
+  constructor(
+    private readonly langchainService: LangchainService,
+    @InjectModel(Chat.name) private chatModel: Model<Chat>,
+  ) {}
 
-  async getChatResponse(id, input): Promise<string> {
-    console.log(id);
-    if (!id) return 'need id';
+  async create(input, response) {
+    return (await this.chatModel.create([{ input, response }]))[0];
+  }
+
+  async getChatResponse(chatRoomId, input): Promise<string> {
+    if (!chatRoomId) return 'need chatRoomId';
     if (input === '종료') {
-      this.langchainService.deleteChain(id);
+      this.langchainService.deleteChain(chatRoomId);
     }
-    const chain = this.langchainService.getChain(id);
+    const chain = this.langchainService.getChain(chatRoomId);
     const { response } = await chain.call({
       input,
     });

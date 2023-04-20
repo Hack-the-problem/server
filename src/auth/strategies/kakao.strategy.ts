@@ -24,7 +24,10 @@ export class KakaoStrategy extends PassportStrategy(Strategy, 'kakao') {
 
     // 회원가입
     if (!user) {
-      user = await this.userService.create({ snsId, sns: 'kakao' });
+      user = await this.userService.create({
+        snsId,
+        provider: 'kakao',
+      });
     }
 
     return user;

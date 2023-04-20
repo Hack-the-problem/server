@@ -12,10 +12,12 @@ export class ChatController {
   @Post()
   postChatInput(@Body() { chatRoomId, input }): Promise<string> {
     const response = this.chatService.getChatResponse(chatRoomId, input);
-    const updatedChatRoom = this.chatRoomService.addChat(chatRoomId, {
-      input,
-      response,
-    });
+    const chatObject = this.chatService.create(input, response);
+    const updatedChatRoom = this.chatRoomService.addChat(
+      chatRoomId,
+      chatObject,
+    );
+    console.log('chatRoom updated', updatedChatRoom);
     return response;
   }
 }

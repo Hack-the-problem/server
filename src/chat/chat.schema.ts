@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
+import { Score } from './subdocument/testScore.schema';
 
 export type ChatDocument = HydratedDocument<Chat>;
 
@@ -13,6 +14,9 @@ export class Chat {
 
   @Prop()
   response: string;
+
+  @Prop()
+  score: Score;
 }
 
 export const ChatSchema = SchemaFactory.createForClass(Chat);

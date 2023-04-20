@@ -12,22 +12,10 @@ export class Result {
   chatRoomId: Types.ObjectId;
 
   @Prop()
-  R: number;
+  image: string;
 
   @Prop()
-  I: number;
-
-  @Prop()
-  A: number;
-
-  @Prop()
-  S: number;
-
-  @Prop()
-  E: number;
-
-  @Prop()
-  C: number;
+  report: string;
 }
 
 export const ResultSchema = SchemaFactory.createForClass(Result);

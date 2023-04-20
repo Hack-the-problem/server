@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { PassportModule } from '@nestjs/passport';
 import { ResultModule } from './result/result.module';
+import { CommentModule } from './comment/comment.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ResultModule } from './result/result.module';
     AuthModule,
     UserModule,
     ResultModule,
+    CommentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
