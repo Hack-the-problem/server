@@ -3,16 +3,19 @@ import { HydratedDocument, Types } from 'mongoose';
 
 export type UserDocument = HydratedDocument<User>;
 
-@Schema()
+@Schema({ timestamps: true })
 export class User {
-  @Prop()
+  @Prop({ index: true })
   _id?: Types.ObjectId;
 
   @Prop()
   snsId: string;
 
   @Prop()
-  sns: string;
+  provider: string;
+
+  @Prop()
+  resultIds: Types.ObjectId[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

@@ -10,6 +10,7 @@ import { LoggerMiddleware } from './middlewares/logger';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { PassportModule } from '@nestjs/passport';
+import { ResultModule } from './result/result.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { PassportModule } from '@nestjs/passport';
     PassportModule,
     AuthModule,
     UserModule,
+    ResultModule,
   ],
   controllers: [AppController],
   providers: [AppService],
