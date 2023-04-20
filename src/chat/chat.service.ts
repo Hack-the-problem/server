@@ -8,7 +8,10 @@ export class ChatService {
   async getChatResponse(id, input): Promise<string> {
     console.log(id);
     if (!id) return 'need id';
-    if (input === '종료') this.langchainService.deleteChain(id);
+    if (input === '종료') {
+      this.langchainService.deleteChain(id);
+      console.log(this.langchainService.getChain(id));
+    }
     const chain = this.langchainService.getChain(id);
     const { response } = await chain.call({
       input,
