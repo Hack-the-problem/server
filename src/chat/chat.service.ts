@@ -10,7 +10,6 @@ export class ChatService {
     if (!id) return 'need id';
     if (input === '종료') {
       this.langchainService.deleteChain(id);
-      console.log(this.langchainService.getChain(id));
     }
     const chain = this.langchainService.getChain(id);
     const { response } = await chain.call({
