@@ -10,14 +10,19 @@ export class ChatController {
   ) {}
 
   @Post()
-  postChatInput(@Body() { chatRoomId, input }): Promise<string> {
-    const response = this.chatService.getChatResponse(chatRoomId, input);
-    const chatObject = this.chatService.create(input, response);
-    const updatedChatRoom = this.chatRoomService.addChat(
+  async postChatInput(@Body() { chatRoomId, input }): Promise<string> {
+    const response = await this.chatService.getChatResponse(chatRoomId, input);
+    const chatObject = await this.chatService.create(input, response);
+    const updatedChatRoom = await this.chatRoomService.addChat(
       chatRoomId,
       chatObject,
     );
-    console.log('chatRoom updated', updatedChatRoom);
+    console.log(
+      'chatRoom updated:: ',
+      updatedChatRoom,
+      'inserted Chat:: ',
+      response,
+    );
     return response;
   }
 }
