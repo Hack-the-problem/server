@@ -27,7 +27,7 @@ export class User {
   phone?: string;
 
   @Prop()
-  birthday?: Date;
+  birthday?: string;
 
   @Prop()
   mbti?: string; // should be enum
