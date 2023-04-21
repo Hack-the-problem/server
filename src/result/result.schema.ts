@@ -1,14 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument, Types } from 'mongoose';
+import { HydratedDocument, Types, SchemaTypes } from 'mongoose';
 
 export type ResultDocument = HydratedDocument<Result>;
 
 @Schema()
 export class Result {
-  @Prop()
+  @Prop({ type: SchemaTypes.ObjectId, auto: true })
   _id: Types.ObjectId;
 
-  @Prop({ ref: 'chatRoom' })
+  @Prop({ types: Types.ObjectId, ref: 'chatRoom' })
   chatRoomId: Types.ObjectId;
 
   @Prop()

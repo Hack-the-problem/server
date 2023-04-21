@@ -24,7 +24,6 @@ export class ChatService {
     const { response } = await chain.call({
       input,
     });
-
     return response;
   }
 }

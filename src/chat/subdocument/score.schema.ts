@@ -3,7 +3,7 @@ import { HydratedDocument } from 'mongoose';
 
 export type ScoreDocument = HydratedDocument<Score>;
 
-@Schema()
+@Schema({ autoCreate: false, autoIndex: false })
 export class Score {
   @Prop()
   R: number;

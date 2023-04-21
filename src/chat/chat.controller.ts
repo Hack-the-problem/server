@@ -13,6 +13,8 @@ export class ChatController {
   async postChatInput(@Body() { chatRoomId, input }): Promise<string> {
     const response = await this.chatService.getChatResponse(chatRoomId, input);
     const chatObject = await this.chatService.create(input, response);
+
+    console.log('chatObject', chatObject);
     const updatedChatRoom = await this.chatRoomService.addChat(
       chatRoomId,
       chatObject,

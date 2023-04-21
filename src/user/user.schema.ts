@@ -1,11 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Date, HydratedDocument, Types } from 'mongoose';
+import { Date, HydratedDocument, Types, SchemaTypes } from 'mongoose';
 
 export type UserDocument = HydratedDocument<User>;
 
 @Schema({ timestamps: true })
 export class User {
-  @Prop()
+  @Prop({ type: SchemaTypes.ObjectId, auto: true })
   _id?: Types.ObjectId;
 
   @Prop()
@@ -41,7 +41,7 @@ export class User {
   @Prop()
   grade?: number;
 
-  @Prop()
+  @Prop({ type: [SchemaTypes.ObjectId] })
   resultIds?: Types.ObjectId[];
 }
 
