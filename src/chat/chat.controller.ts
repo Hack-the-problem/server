@@ -16,10 +16,7 @@ export class ChatController {
     const response = await this.langchainService.getResponse(chatRoomId, input);
     const chatObject = await this.chatService.create(input, response);
 
-    const updatedChatRoom = await this.chatRoomService.addChat(
-      chatRoomId,
-      chatObject._id,
-    );
+    const updatedChatRoom = await this.chatRoomService.addChat(chatRoomId, chatObject._id);
     return response;
   }
 }

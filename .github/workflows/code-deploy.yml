@@ -29,6 +29,7 @@ jobs:
           cd ${{ github.workspace }}
           cat << EOF > .env
           OPEN_API_KEY=${{ secrets.OPEN_API_KEY }}
+          STABLE_DIFFUSION_KEY=${{ secrets.STABLE_DIFFUSION_KEY }}
           MONGO_URI=${{ secrets.MONGO_URI }}
           KAKAO_CLIENT_ID=${{ secrets.KAKAO_CLIENT_ID }}
           KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }}

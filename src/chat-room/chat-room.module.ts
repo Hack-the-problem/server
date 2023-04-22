@@ -5,11 +5,7 @@ import { ChatRoomController } from './chat-room.controller';
 import { ChatRoom, ChatRoomSchema } from './chat-room.schema';
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([
-      { name: ChatRoom.name, schema: ChatRoomSchema },
-    ]),
-  ],
+  imports: [MongooseModule.forFeature([{ name: ChatRoom.name, schema: ChatRoomSchema }])],
   controllers: [ChatRoomController],
   providers: [ChatRoomService],
   exports: [ChatRoomService],
