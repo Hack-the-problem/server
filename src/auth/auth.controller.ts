@@ -15,11 +15,16 @@ export class AuthController {
   @Get('kakao/callback')
   @UseGuards(AuthGuard('kakao'))
   async kakaoAuthCallback(@Request() req, @Res() res: Response) {
+    console.log('kakao login::', req.user);
     if (!req.user) {
       res.redirect(`${process.env.CLIENT_URL}/login`);
       return;
     }
     const token = await this.authService.createToken(req.user);
-    res.redirect(`${process.env.CLIENT_URL}/callback?token=${token}`);
+    if (req.user.status === 'pending') {
+      res.redirect(`${process.env.CLIENT_URL}/join?token=${token}`);
+    }
+
+    res.redirect(`${process.env.CLIENT_URL}/home?token=${token}`);
   }
 }

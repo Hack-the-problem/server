@@ -28,10 +28,12 @@
     "@nestjs/mongoose": "^9.2.2",
     "@nestjs/passport": "^9.0.3",
     "@nestjs/platform-express": "^9.0.0",
+    "class-validator": "^0.14.0",
     "langchain": "^0.0.59",
     "mongoose": "^7.0.4",
     "passport": "^0.6.0",
     "passport-kakao": "^1.0.1",
+    "python-shell": "^5.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0"
   },

@@ -19,6 +19,7 @@ export class ChatRoomService {
     return this.chatRoomModel.findOneAndUpdate(
       { _id },
       { $addToSet: { chats: chat } },
+      { new: true },
     );
   }
 }

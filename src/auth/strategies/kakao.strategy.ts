@@ -20,13 +20,13 @@ export class KakaoStrategy extends PassportStrategy(Strategy, 'kakao') {
     done: VerifyCallback,
   ): Promise<any> {
     const snsId = profile.id;
-    let user = await this.userService.findBy({ snsId });
+    let user = await this.userService.findBy({ 'accounts.snsId': snsId });
 
     // 회원가입
     if (!user) {
       user = await this.userService.create({
-        snsId,
-        provider: 'kakao',
+        status: 'pending',
+        accounts: [{ snsId, provider: 'kakao' }],
       });
     }
 

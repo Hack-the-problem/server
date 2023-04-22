@@ -11,6 +11,7 @@ export class ChatController {
 
   @Post()
   async postChatInput(@Body() { chatRoomId, input }): Promise<string> {
+    const score = await this.chatService.getScore(input);
     const response = await this.chatService.getChatResponse(chatRoomId, input);
     const chatObject = await this.chatService.create(input, response);
 

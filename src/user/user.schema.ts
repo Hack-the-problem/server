@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Date, HydratedDocument, Types, SchemaTypes } from 'mongoose';
+import { HydratedDocument, Types, SchemaTypes } from 'mongoose';
+import { Account, AccountSchema } from './subdocuments/account.schema';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -8,14 +9,11 @@ export class User {
   @Prop({ type: SchemaTypes.ObjectId, auto: true })
   _id?: Types.ObjectId;
 
-  @Prop()
-  snsId: string;
+  @Prop({ type: [AccountSchema] })
+  accounts: Account[];
 
-  @Prop()
-  provider: string;
-
-  @Prop()
-  password?: string;
+  @Prop({ enum: ['pending', 'done'] })
+  status: string;
 
   @Prop({ default: false })
   isAdmin?: boolean;
