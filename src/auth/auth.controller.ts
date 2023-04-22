@@ -18,15 +18,15 @@ export class AuthController {
     console.log('kakao login::', req.user);
     if (!req.user) {
       res.redirect(`${process.env.CLIENT_URL}/login`);
-      return;
+      return res.status(404).send({ accessToken: null });
     }
-    const token = await this.authService.createToken(req.user);
+    const accessToken = await this.authService.createToken(req.user);
     if (req.user.status === 'pending') {
-      res.redirect(`${process.env.CLIENT_URL}/join?token=${token}`);
-      return;
+      // res.redirect(`${process.env.CLIENT_URL}/join?token=${token}`);
+      return res.send({ accessToken });
     } else {
-      res.redirect(`${process.env.CLIENT_URL}/home?token=${token}`);
-      return;
+      // res.redirect(`${process.env.CLIENT_URL}/home?token=${token}`);
+      return res.send({ accessToken });
     }
   }
 }
