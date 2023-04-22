@@ -23,8 +23,10 @@ export class AuthController {
     const token = await this.authService.createToken(req.user);
     if (req.user.status === 'pending') {
       res.redirect(`${process.env.CLIENT_URL}/join?token=${token}`);
+      return;
+    } else {
+      res.redirect(`${process.env.CLIENT_URL}/home?token=${token}`);
+      return;
     }
-
-    res.redirect(`${process.env.CLIENT_URL}/home?token=${token}`);
   }
 }

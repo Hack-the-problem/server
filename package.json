@@ -32,6 +32,7 @@
     "langchain": "^0.0.59",
     "mongoose": "^7.0.4",
     "passport": "^0.6.0",
+    "passport-jwt": "^4.0.1",
     "passport-kakao": "^1.0.1",
     "python-shell": "^5.0.0",
     "reflect-metadata": "^0.1.13",

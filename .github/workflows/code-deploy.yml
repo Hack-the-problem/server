@@ -34,7 +34,7 @@ jobs:
           KAKAO_CLIENT_SECRET=${{ secrets.KAKAO_CLIENT_SECRET }}
           SERVER_URL=${{ secrets.SERVER_URL }}
           CLIENT_URL=${{ secrets.CLIENT_URL }}
-          JWT_PUBLIC_KEY=${{ secrets.JWT_PUBLIC_KEY }}
+          JWT_SECRET=${{ secrets.JWT_SECRET }}
           EOF
           chmod 644 .env
 
