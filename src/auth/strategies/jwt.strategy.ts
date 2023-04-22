@@ -13,6 +13,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any) {
+    console.log('key: ', process.env.JWT_SECRET);
     return { _id: payload.sub };
   }
 }
