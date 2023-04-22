@@ -50,6 +50,10 @@ export class LangchainService {
     return this.chainTable[id];
   }
 
+  getChains() {
+    return Object.keys(this.chainTable);
+  }
+
   deleteChain(id) {
     delete this.chainTable[id];
     console.log('삭제되었습니다.', `result: ${this.chainTable[id]}`);
@@ -59,6 +63,7 @@ export class LangchainService {
     if (!chatRoomId) return 'need chatRoomId';
     if (input === '종료') {
       this.deleteChain(chatRoomId);
+      return 'session finished';
     }
     const chain = this.getChain(chatRoomId);
     const { response } = await chain.call({

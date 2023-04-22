@@ -3,9 +3,13 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ChatRoomService } from './chat-room.service';
 import { ChatRoomController } from './chat-room.controller';
 import { ChatRoom, ChatRoomSchema } from './chat-room.schema';
+import { LangchainModule } from 'src/langchain/langchain.module';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: ChatRoom.name, schema: ChatRoomSchema }])],
+  imports: [
+    MongooseModule.forFeature([{ name: ChatRoom.name, schema: ChatRoomSchema }]),
+    LangchainModule,
+  ],
   controllers: [ChatRoomController],
   providers: [ChatRoomService],
   exports: [ChatRoomService],

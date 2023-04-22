@@ -11,7 +11,7 @@ export class ChatRoomService {
     return (await this.chatRoomModel.create([{ _id: new Types.ObjectId() }]))[0];
   }
 
-  async addChat(_id, chatId) {
-    return this.chatRoomModel.findOneAndUpdate({ _id }, { $addToSet: { chatIds: chatId } }, { new: true });
+  async addChat(_id, chatIds) {
+    return this.chatRoomModel.findOneAndUpdate({ _id }, { $addToSet: { chatIds: { $each: chatIds } } }, { new: true });
   }
 }
