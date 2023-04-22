@@ -3,7 +3,6 @@ import { LangchainService } from '../langchain/langchain.service';
 import { InjectModel } from '@nestjs/mongoose';
 import { Chat } from './chat.schema';
 import { Model } from 'mongoose';
-import { spawn } from 'child_process';
 import { PythonShell } from 'python-shell';
 
 @Injectable()
