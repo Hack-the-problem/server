@@ -10,7 +10,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
   canActivate(context: ExecutionContext) {
     // Add your custom authentication logic here
     // for example, call super.logIn(request) to establish a session.
-    console.log(context);
+    console.log(context[0].rawHeaders);
     return super.canActivate(context);
   }
 
@@ -21,6 +21,9 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     console.log(info);
     if (err || !user) {
       throw err || new UnauthorizedException();
+    }
+    if (info) {
+      throw new Error(info);
     }
     return user;
   }
