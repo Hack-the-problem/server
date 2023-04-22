@@ -15,10 +15,10 @@ export class ChatRoomService {
     )[0];
   }
 
-  async addChat(_id, chat) {
+  async addChat(_id, chatId) {
     return this.chatRoomModel.findOneAndUpdate(
       { _id },
-      { $addToSet: { chats: chat } },
+      { $addToSet: { chatIds: chatId } },
       { new: true },
     );
   }

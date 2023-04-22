@@ -54,4 +54,16 @@ export class LangchainService {
     delete this.chainTable[id];
     console.log('삭제되었습니다.', `result: ${this.chainTable[id]}`);
   }
+
+  async getResponse(chatRoomId, input): Promise<string> {
+    if (!chatRoomId) return 'need chatRoomId';
+    if (input === '종료') {
+      this.deleteChain(chatRoomId);
+    }
+    const chain = this.getChain(chatRoomId);
+    const { response } = await chain.call({
+      input,
+    });
+    return response;
+  }
 }

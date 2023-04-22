@@ -1,30 +1,24 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ChatService } from './chat.service';
 import { ChatRoomService } from 'src/chat-room/chat-room.service';
+import { LangchainService } from 'src/langchain/langchain.service';
 
 @Controller('chat')
 export class ChatController {
   constructor(
     private readonly chatService: ChatService,
     private readonly chatRoomService: ChatRoomService,
+    private readonly langchainService: LangchainService,
   ) {}
 
   @Post()
   async postChatInput(@Body() { chatRoomId, input }): Promise<string> {
-    const score = await this.chatService.getScore(input);
-    const response = await this.chatService.getChatResponse(chatRoomId, input);
+    const response = await this.langchainService.getResponse(chatRoomId, input);
     const chatObject = await this.chatService.create(input, response);
 
-    console.log('chatObject', chatObject);
     const updatedChatRoom = await this.chatRoomService.addChat(
       chatRoomId,
-      chatObject,
-    );
-    console.log(
-      'chatRoom updated:: ',
-      updatedChatRoom,
-      'inserted Chat:: ',
-      response,
+      chatObject._id,
     );
     return response;
   }
