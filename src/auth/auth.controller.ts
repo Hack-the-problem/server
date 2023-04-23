@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards, Request, Res } from '@nestjs/common';
+import { Controller, Get, UseGuards, Request, Res, Post } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Response } from 'express';
 import { AuthService } from './auth.service';
@@ -15,7 +15,7 @@ export class AuthController {
   @Get('kakao/callback')
   @UseGuards(AuthGuard('kakao'))
   async kakaoAuthCallback(@Request() req, @Res() res: Response) {
-    console.log('kakao login::', req.user);
+    console.log('kakao login:: ', req.user);
     if (!req.user) {
       res.redirect(`${process.env.CLIENT_URL}/login`);
       return res.status(404).send({ accessToken: null });
@@ -23,10 +23,18 @@ export class AuthController {
     const accessToken = await this.authService.createToken(req.user);
     if (req.user.status === 'pending') {
       // res.redirect(`${process.env.CLIENT_URL}/join?token=${token}`);
-      return res.send({ accessToken });
+      return res.send({ accessToken: null });
     } else {
       // res.redirect(`${process.env.CLIENT_URL}/home?token=${token}`);
       return res.send({ accessToken });
     }
+  }
+
+  @Post('local')
+  @UseGuards(AuthGuard('local'))
+  async localAuth(@Request() req, @Res() res: Response) {
+    console.log('local login:: ', req.user);
+    const accessToken = await this.authService.createToken(req.user);
+    return res.send({ accessToken });
   }
 }

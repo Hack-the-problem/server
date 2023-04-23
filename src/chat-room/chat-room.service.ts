@@ -12,6 +12,10 @@ export class ChatRoomService {
   }
 
   async addChat(_id, chatIds) {
-    return this.chatRoomModel.findOneAndUpdate({ _id }, { $addToSet: { chatIds: { $each: chatIds } } }, { new: true });
+    return this.chatRoomModel.findOneAndUpdate(
+      { _id },
+      { $addToSet: { chatIds: { $each: chatIds } } },
+      { new: true },
+    );
   }
 }

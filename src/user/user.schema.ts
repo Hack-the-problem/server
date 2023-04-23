@@ -12,7 +12,7 @@ export class User {
   @Prop({ type: [AccountSchema] })
   accounts: Account[];
 
-  @Prop({ enum: ['pending', 'done'] })
+  @Prop({ enum: ['temp', 'pending', 'done'], default: 'pending' })
   status: string;
 
   @Prop({ default: false })

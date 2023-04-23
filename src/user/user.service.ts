@@ -12,8 +12,8 @@ export class UserService {
     return this.userModel.findOne(filter).lean().exec();
   }
 
-  async create(user: User): Promise<User> {
-    return this.userModel.create(user);
+  async create(createUserDto): Promise<User> {
+    return (await this.userModel.create([createUserDto]))[0];
   }
 
   async update(_id, updateUserDto: UpdateUserDto): Promise<User> {
