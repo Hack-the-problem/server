@@ -17,7 +17,6 @@ export class ChatController {
     const chatObject = await this.chatService.create(input, response);
 
     const updatedChatRoom = await this.chatRoomService.addChat(chatRoomId, [chatObject._id]);
-    console.log('updatedChatRoom', updatedChatRoom);
     return response;
   }
 }

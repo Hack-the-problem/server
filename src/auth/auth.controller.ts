@@ -15,7 +15,6 @@ export class AuthController {
   @Get('kakao/callback')
   @UseGuards(AuthGuard('kakao'))
   async kakaoAuthCallback(@Request() req, @Res() res: Response) {
-    console.log('kakao login:: ', req.user);
     if (!req.user) {
       res.redirect(`${process.env.CLIENT_URL}/login`);
       return res.status(404).send({ accessToken: null });
@@ -33,7 +32,6 @@ export class AuthController {
   @Post('local')
   @UseGuards(AuthGuard('local'))
   async localAuth(@Request() req, @Res() res: Response) {
-    console.log('local login:: ', req.user);
     const accessToken = await this.authService.createToken(req.user);
     return res.send({ accessToken });
   }

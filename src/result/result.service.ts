@@ -38,11 +38,14 @@ export class ResultService {
       webhook: null,
       track_id: null,
     };
-    const response = await axios.post(url, data, { headers: { 'Content-Type': 'application/json' } });
+    const response = await axios.post(url, data, {
+      headers: { 'Content-Type': 'application/json' },
+    });
+
     if (response.data.status === 'error') {
       throw new InternalServerErrorException(response.data.message);
     }
-    console.log('data', response.data);
+
     return {
       prompt,
       negativePrompt,
