@@ -41,6 +41,10 @@ export class ResultController {
     const reportChat = await this.chatService.create(reportInput, report);
 
     await this.chatRoomService.addChat(chatRoomId, [senarioChat._id, reportChat._id]);
-    return await this.resultService.create(chatRoomId, newCartoonObject, report);
+    const newResult = await this.resultService.create(chatRoomId, newCartoonObject, report);
+
+    await this.userService.addResultId(req.user._id, newResult._id);
+
+    return newResult;
   }
 }

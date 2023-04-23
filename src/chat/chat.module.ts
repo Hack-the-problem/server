@@ -7,7 +7,11 @@ import { Chat, ChatSchema } from './chat.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: Chat.name, schema: ChatSchema }]), LangchainModule, ChatRoomModule],
+  imports: [
+    MongooseModule.forFeature([{ name: Chat.name, schema: ChatSchema }]),
+    LangchainModule,
+    ChatRoomModule,
+  ],
   controllers: [ChatController],
   providers: [ChatService],
   exports: [ChatService],

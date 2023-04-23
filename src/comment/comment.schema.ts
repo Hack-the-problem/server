@@ -9,10 +9,10 @@ export class Comment {
   _id: Types.ObjectId;
 
   @Prop({ type: SchemaTypes.ObjectId })
-  resultId: Types.ObjectId;
+  userId: Types.ObjectId;
 
   @Prop({ type: SchemaTypes.ObjectId })
-  userId: Types.ObjectId;
+  resultId: Types.ObjectId;
 
   @Prop()
   text: string;

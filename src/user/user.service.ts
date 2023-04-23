@@ -19,4 +19,12 @@ export class UserService {
   async update(_id, updateUserDto: UpdateUserDto): Promise<User> {
     return this.userModel.findOneAndUpdate({ _id }, { ...updateUserDto }, { new: true });
   }
+
+  async addResultId(_id, resultId): Promise<User> {
+    return this.userModel.findByIdAndUpdate(
+      _id,
+      { $addToSet: { resultIds: resultId } },
+      { new: true },
+    );
+  }
 }
