@@ -13,6 +13,8 @@ export class SlackExceptionFilter implements ExceptionFilter {
 
     const errorFrom = `Request ${req.method} ${req.originalUrl}`;
 
+    console.log(exception);
+
     if (!exception?.response) {
       const errorMessage = `[ERROR] ${exception.message} \n [stack] ${exception.stack}`;
       await this.slackService.sendLogMessage(errorMessage);
@@ -25,7 +27,7 @@ export class SlackExceptionFilter implements ExceptionFilter {
     }
     const { statusCode, message, error } = exception.response;
     const errorMessage = `[ERROR] ${error} \n ${
-      message.length ? [...message].map((text) => `- ${text}`).join('\n') : message
+      typeof message !== 'string' ? [...message].map((text) => `- ${text}`).join('\n') : message
     }`;
 
     await this.slackService.sendLogMessage(errorMessage);
