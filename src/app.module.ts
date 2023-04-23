@@ -6,7 +6,7 @@ import { ChatRoomModule } from './chat-room/chat-room.module';
 import { ChatModule } from './chat/chat.module';
 import { LangchainModule } from './langchain/langchain.module';
 import { MongooseModule } from '@nestjs/mongoose';
-import { LoggerMiddleware } from './middlewares/logger';
+import { LoggerMiddleware } from './utils/middlewares/logger';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { PassportModule } from '@nestjs/passport';

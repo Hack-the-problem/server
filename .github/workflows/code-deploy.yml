@@ -36,6 +36,7 @@ jobs:
           SERVER_URL=${{ secrets.SERVER_URL }}
           CLIENT_URL=${{ secrets.CLIENT_URL }}
           JWT_SECRET=${{ secrets.JWT_SECRET }}
+          SLACK_WEBHOOK_URL=${{ secrets.SLACK_WEBHOOK_URL }}
           EOF
           chmod 644 .env
 
