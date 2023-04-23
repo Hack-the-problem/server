@@ -12,7 +12,7 @@ export class Account {
   @Prop({ default: undefined })
   snsId?: string;
 
-  @Prop({ enum: ['kakao', 'google', 'local'] })
+  @Prop({ enum: ['kakao', 'google', 'local', 'temp'] })
   provider: string;
 
   @Prop({

@@ -11,6 +11,7 @@ import {
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller('user')
 export class UserController {
@@ -31,13 +32,18 @@ export class UserController {
   }
 
   @Post()
-  async createUser(@Body() { email, password }) {
+  async createUser(@Body() createUserDto: CreateUserDto) {
+    const { email, password, ...rest } = createUserDto;
     const localAccountObject = {
       email,
       password,
       provider: 'local',
     };
-    return await this.userService.create({ accounts: [localAccountObject], status: 'done' });
+    return await this.userService.create({
+      accounts: [localAccountObject],
+      status: 'done',
+      ...rest,
+    });
   }
 
   @Post('/temp')
@@ -45,8 +51,8 @@ export class UserController {
     const tempAccountObject = {
       nickname,
       password,
-      provider: 'local',
+      provider: 'temp',
     };
-    return await this.userService.create({ accounts: [tempAccountObject], status: 'temp' });
+    return await this.userService.create({ accounts: [tempAccountObject] });
   }
 }
