@@ -6,10 +6,12 @@ import { Result, ResultSchema } from './result.schema';
 import { LangchainModule } from 'src/langchain/langchain.module';
 import { ChatModule } from 'src/chat/chat.module';
 import { ChatRoomModule } from 'src/chat-room/chat-room.module';
+import { UserModule } from 'src/user/user.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Result.name, schema: ResultSchema }]),
+    UserModule,
     ChatModule,
     ChatRoomModule,
     LangchainModule,

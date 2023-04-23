@@ -1,6 +1,6 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
+import { Model } from 'mongoose';
 import { Result, ResultDocument } from './result.schema';
 import axios from 'axios';
 import { Cartoon } from './subDocuments/cartoon.schema';
@@ -17,12 +17,12 @@ export class ResultService {
     return this.resultModel.findById(id).exec();
   }
 
-  makePrompt(senario) {
+  makePrompt(userInfo, senario) {
     return { prompt: 'backend developer', negativePrompt: 'not working alone' };
   }
 
-  async createCartoon(senario): Promise<Cartoon> {
-    const { prompt, negativePrompt } = this.makePrompt(senario);
+  async createCartoon(userInfo, senario): Promise<Cartoon> {
+    const { prompt, negativePrompt } = this.makePrompt(userInfo, senario);
     const url = 'https://stablediffusionapi.com/api/v3/text2img';
     const data = {
       key: process.env.STABLE_DIFFUSION_KEY,
