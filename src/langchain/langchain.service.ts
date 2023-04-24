@@ -59,6 +59,14 @@ export class LangchainService {
     console.log('삭제되었습니다.', `result: ${this.chainTable[id]}`);
   }
 
+  async initChatbot(chatRoomId, input) {
+    const chain = this.getChain(chatRoomId);
+    const { response } = await chain.call({
+      input,
+    });
+    return response;
+  }
+
   async getResponse(chatRoomId, input): Promise<string> {
     if (!chatRoomId) return 'need chatRoomId';
     if (input === '종료') {

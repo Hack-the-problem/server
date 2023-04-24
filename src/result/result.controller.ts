@@ -32,16 +32,16 @@ export class ResultController {
     // const input = makeInput(template, jobName);
     const user = await this.userService.findBy({ _id: req.user._id });
     const senario = await this.langchainService.getResponse(chatRoomId, input);
-    const senarioChat = await this.chatService.create(input, senario);
+    const senarioChatObject = await this.chatService.create(input, senario);
 
-    const newCartoonObject = await this.resultService.createCartoon(user, senario);
+    const cartoonObject = await this.resultService.createCartoon(user, senario);
 
     const reportInput = reportTemplate ?? '지금까지 대화를 토대로 직업 보고서를 작성해줘';
     const report = await this.langchainService.getResponse(chatRoomId, reportInput);
-    const reportChat = await this.chatService.create(reportInput, report);
+    const reportChatObject = await this.chatService.create(reportInput, report);
 
-    await this.chatRoomService.addChat(chatRoomId, [senarioChat._id, reportChat._id]);
-    const newResult = await this.resultService.create(chatRoomId, newCartoonObject, report);
+    await this.chatRoomService.addChat(chatRoomId, [senarioChatObject._id, reportChatObject._id]);
+    const newResult = await this.resultService.create(chatRoomId, cartoonObject, report);
 
     await this.userService.addResultId(req.user._id, newResult._id);
 

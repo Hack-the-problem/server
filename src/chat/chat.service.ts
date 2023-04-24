@@ -14,4 +14,12 @@ export class ChatService {
   async create(input, response) {
     return (await this.chatModel.create([{ input, response }]))[0];
   }
+
+  async findById(id) {
+    return await this.chatModel.findById(id);
+  }
+
+  async findBy(filter) {
+    return await this.chatModel.find(filter);
+  }
 }

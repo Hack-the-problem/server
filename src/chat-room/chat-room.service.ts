@@ -11,6 +11,14 @@ export class ChatRoomService {
     return (await this.chatRoomModel.create([{ _id: new Types.ObjectId() }]))[0];
   }
 
+  async findById(id) {
+    return await this.chatRoomModel.findById(id);
+  }
+
+  async getChatIds(id) {
+    return (await this.chatRoomModel.findById(id, { chatIds: 1 }))?.chatIds;
+  }
+
   async addChat(_id, chatIds) {
     return this.chatRoomModel.findOneAndUpdate(
       { _id },

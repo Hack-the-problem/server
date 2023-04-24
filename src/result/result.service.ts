@@ -3,6 +3,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Result, ResultDocument } from './result.schema';
 import axios from 'axios';
+import sharp from 'sharp';
+
 import { Cartoon } from './subDocuments/cartoon.schema';
 
 @Injectable()
@@ -18,7 +20,14 @@ export class ResultService {
   }
 
   makePrompt(userInfo, senario) {
-    return { prompt: 'backend developer', negativePrompt: 'not working alone' };
+    const defaultPrompt =
+      'masterpiece, best quality, extremely detailed CG, beautiful detailed eyes, ultra-detailed, intricate details, 8k wallpaper, elaborate features emma watson ';
+    const defaultNegativePrompt =
+      'low resolution, blurry, worst quality, low quality, huge breasts, nsfw, bad proportions, big eyes, normal quality, ';
+    return {
+      prompt: defaultPrompt + `${userInfo.gender}, ` + 'backend developer',
+      negativePrompt: defaultNegativePrompt + `not ${userInfo.gender}, ` + 'not working alone',
+    };
   }
 
   async createCartoon(userInfo, senario): Promise<Cartoon> {
@@ -38,6 +47,7 @@ export class ResultService {
       webhook: null,
       track_id: null,
     };
+
     const response = await axios.post(url, data, {
       headers: { 'Content-Type': 'application/json' },
     });
@@ -45,11 +55,33 @@ export class ResultService {
     if (response.data.status === 'error') {
       throw new InternalServerErrorException(response.data.message);
     }
+    console.log(response);
+    console.log('stable diffusion output:: ', response.data);
+
+    console.log('response', response);
+
+    // const data = { inputs: prompt };
+    // const response = await fetch(
+    //   'https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5',
+    //   {
+    //     headers: { Authorization: 'Bearer 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' },
+    //     method: 'POST',
+    //     body: JSON.stringify(data),
+    //   },
+    // );
+
+    // const result = await response.blob();
+    // console.log(result);
+    // const buffer = await result.arrayBuffer();
+    // const imageResult = await sharp(buffer).png().toFile('image.png');
+    // console.log('imageResult', imageResult);
 
     return {
       prompt,
       negativePrompt,
+      // sdId: '1',
       sdId: response.data.id,
+      // imageURLs: ['1'],
       imageURLs: response.data.output,
     };
   }
