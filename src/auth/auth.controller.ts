@@ -20,13 +20,7 @@ export class AuthController {
       return res.status(404).send({ accessToken: null });
     }
     const accessToken = await this.authService.createToken(req.user);
-    if (req.user.status === 'pending') {
-      // res.redirect(`${process.env.CLIENT_URL}/join?token=${token}`);
-      return res.send({ accessToken: null });
-    } else {
-      // res.redirect(`${process.env.CLIENT_URL}/home?token=${token}`);
-      return res.send({ accessToken });
-    }
+    return res.send({ accessToken });
   }
 
   @Post('local')
