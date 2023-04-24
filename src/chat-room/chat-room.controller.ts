@@ -16,7 +16,6 @@ export class ChatRoomController {
 
   @Get('/instance')
   getActiveChainInstance() {
-    throw Error('chain error');
     return this.langchainService.getChains();
   }
 }
