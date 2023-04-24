@@ -20,7 +20,7 @@ export class AuthController {
       return res.status(404).send({ accessToken: null });
     }
     const accessToken = await this.authService.createToken(req.user);
-    return res.send({ accessToken });
+    return res.send({ accessToken, status: req.user.status });
   }
 
   @Post('local')
