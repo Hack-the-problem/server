@@ -22,12 +22,14 @@ export class KakaoStrategy extends PassportStrategy(Strategy, 'kakao') {
     const snsId = profile.id;
     let user = await this.userService.findBy({ 'accounts.snsId': snsId });
 
+    console.log('exist user', user);
     // 회원가입
     if (!user) {
       user = await this.userService.create({
         status: 'pending',
         accounts: [{ snsId, provider: 'kakao' }],
       });
+      console.log('new user', user);
     }
 
     return user;

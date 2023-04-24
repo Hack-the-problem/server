@@ -16,7 +16,7 @@ export class AuthController {
   @UseGuards(AuthGuard('kakao'))
   async kakaoAuthCallback(@Request() req, @Res() res: Response) {
     if (!req.user) {
-      res.redirect(`${process.env.CLIENT_URL}/login`);
+      res.redirect(`${process.env.CLIENT_URL}/kakaoLogin`);
       return res.status(404).send({ accessToken: null });
     }
     const accessToken = await this.authService.createToken(req.user);
