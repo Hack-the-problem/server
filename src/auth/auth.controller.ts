@@ -20,7 +20,11 @@ export class AuthController {
       return res.status(404).send({ accessToken: null });
     }
     const accessToken = await this.authService.createToken(req.user);
-    return res.send({ accessToken, status: req.user.status });
+    if (req.user.status !== 'done') {
+      return res.cookie('token', accessToken).redirect(`${process.env.CLIENT_URL}/register`);
+    } else {
+      return res.cookie('token', accessToken).redirect(`${process.env.CLIENT_URL}`);
+    }
   }
 
   @Post('local')

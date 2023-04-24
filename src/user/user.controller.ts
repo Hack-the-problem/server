@@ -5,7 +5,7 @@ import {
   Body,
   UseGuards,
   Request,
-  NotFoundException,
+  Res,
   Post,
   ValidationPipe,
 } from '@nestjs/common';
@@ -13,10 +13,15 @@ import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { CreateUserDto } from './dto/create-user.dto';
+import { Response } from 'express';
+import { AuthService } from 'src/auth/auth.service';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly authService: AuthService,
+  ) {}
 
   @Post()
   async createUser(@Body(ValidationPipe) createUserDto: CreateUserDto) {
@@ -51,7 +56,9 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard)
   @Put('/profile')
-  async updateMyInfo(@Request() req, @Body() updateUserDto: UpdateUserDto) {
-    return await this.userService.update(req.user._id, updateUserDto);
+  async updateMyInfo(@Request() req, @Body() updateUserDto: UpdateUserDto, @Res() res: Response) {
+    const updatedUser = await this.userService.update(req.user._id, updateUserDto);
+    const accessToken = this.authService.createToken(updatedUser);
+    return res.cookie('token', accessToken).send(updatedUser);
   }
 }
