@@ -23,14 +23,14 @@ export class ResultController {
     return await this.resultService.findById(id);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Post()
   async createResult(
     @Request() req,
-    @Body() { chatRoomId, input, reportTemplate },
+    @Body() { userId, chatRoomId, input, reportTemplate },
   ): Promise<Result> {
     // const input = makeInput(template, jobName);
-    const user = await this.userService.findBy({ _id: req.user._id });
+    const user = await this.userService.findBy({ _id: userId });
     const senario = await this.langchainService.getResponse(chatRoomId, input);
     const senarioChatObject = await this.chatService.create(input, senario);
 
