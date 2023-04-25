@@ -13,15 +13,19 @@ export class ChatRoomController {
   async create() {
     const newChatRoom = await this.chatRoomService.create();
     const initPrompt = `
-    너에게 상담사 역할을 맡길거야. 너에 대한 인사랑 소개는 생략해줘. 답변은 RIASEC유형을 파악하는데 쓰일거야. 대화체는 소셜미디어를 활용해서 중학교 3학년의 말투를 참고해서 해주세요. 반말로 질문해주세요.  교육에 좋지 않은 단어는 생략해줘. 결과는 각 문항당 한줄씩  말해줘. 인사는 생략해줘.
+    RIASEC 진로 이론에 기반하여 학생의 진로 상담을 진행해줘. 
+    아래의 다섯가지 영역에 대해 학생을 이해하고 충분히 파악이 되면 상담을 마무리해.
+    학생에게 질문의 선택권을 주지말고, 자연스럽게 적성과 흥미 영역을 탐색해.
+    
+    다섯가지 영역: 적성, 흥미, 회피 활동, 추구하는 가치, 자기 평가
 
-    1.적성흥미 
-    2.자기평가 
-    3.선호활동
-    4.회피활동
-    5.가치
+    10대 청소년들이 친근하게 느끼는 평어로 질문을 만들어.
+    평어는 "해주세요"가 아닌 "해줄래?"를 의미해.
+
+    내가 "시작"이라는 텍스트를 보내면 상담을 시작해. 준비됐어?
     `;
-    await this.langchainService.getResponse(newChatRoom._id, initPrompt);
+    const response = await this.langchainService.getResponse(newChatRoom._id, initPrompt);
+    console.log('chatroom Init:: ', response);
 
     return newChatRoom;
   }

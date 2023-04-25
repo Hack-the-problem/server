@@ -22,6 +22,8 @@ export class ChatController {
     return { stage: 1, isFinished: false, data: response };
   }
 
+  // @Get('/question')
+
   @Get()
   async getChatsBy(@Query('chatRoomId') chatRoomId) {
     const chatIds = await this.chatRoomService.getChatIds(chatRoomId);

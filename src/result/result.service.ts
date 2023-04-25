@@ -11,27 +11,27 @@ import { Cartoon } from './subDocuments/cartoon.schema';
 export class ResultService {
   constructor(@InjectModel(Result.name) private resultModel: Model<ResultDocument>) {}
 
-  async create(chatRoomId: string, cartoon: any, report: string): Promise<Result> {
-    return (await this.resultModel.create([{ chatRoomId, cartoon, report }]))?.[0];
+  async create(chatRoomId: string, cartoon: any): Promise<Result> {
+    return (await this.resultModel.create([{ chatRoomId, cartoon }]))?.[0];
   }
 
   async findById(id: string): Promise<Result> {
     return this.resultModel.findById(id).exec();
   }
 
-  makePrompt(userInfo, senario) {
+  makePrompt(senario) {
     const defaultPrompt =
       'masterpiece, best quality, extremely detailed CG, beautiful detailed eyes, ultra-detailed, intricate details, 8k wallpaper, elaborate features emma watson ';
     const defaultNegativePrompt =
       'low resolution, blurry, worst quality, low quality, huge breasts, nsfw, bad proportions, big eyes, normal quality, ';
     return {
-      prompt: defaultPrompt + `${userInfo.gender}, ` + 'backend developer',
-      negativePrompt: defaultNegativePrompt + `not ${userInfo.gender}, ` + 'not working alone',
+      prompt: defaultPrompt + 'backend developer',
+      negativePrompt: defaultNegativePrompt + 'not working alone',
     };
   }
 
-  async createCartoon(userInfo, senario): Promise<Cartoon> {
-    const { prompt, negativePrompt } = this.makePrompt(userInfo, senario);
+  async createCartoon(senario): Promise<Cartoon> {
+    const { prompt, negativePrompt } = this.makePrompt(senario);
     const url = 'https://stablediffusionapi.com/api/v3/text2img';
     const data = {
       key: process.env.STABLE_DIFFUSION_KEY,

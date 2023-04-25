@@ -14,9 +14,6 @@ export class Result {
 
   @Prop({ types: CartoonSchema })
   cartoon: Cartoon;
-
-  @Prop()
-  report: string;
 }
 
 export const ResultSchema = SchemaFactory.createForClass(Result);
