@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types, SchemaTypes } from 'mongoose';
 import { Cartoon, CartoonSchema } from './subDocuments/cartoon.schema';
+import { Report, ReportSchema } from './subDocuments/report.schema';
 
 export type ResultDocument = HydratedDocument<Result>;
 
@@ -11,6 +12,9 @@ export class Result {
 
   @Prop({ types: Types.ObjectId, ref: 'chatRoom' })
   chatRoomId: Types.ObjectId;
+
+  @Prop({ types: ReportSchema })
+  report: Report;
 
   @Prop({ types: CartoonSchema })
   cartoon: Cartoon;

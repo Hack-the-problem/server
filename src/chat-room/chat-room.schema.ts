@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types, SchemaTypes } from 'mongoose';
+import { Counsel, CounselSchema } from './subdocuments/counsel.schema';
 
 export type ChatRoomDocument = HydratedDocument<ChatRoom>;
 
@@ -13,6 +14,9 @@ export class ChatRoom {
 
   @Prop({ ref: 'chat' })
   chatIds: Types.ObjectId[];
+
+  @Prop({ type: CounselSchema })
+  counsels?: Counsel[];
 }
 
 export const ChatRoomSchema = SchemaFactory.createForClass(ChatRoom);

@@ -11,12 +11,24 @@ import { Cartoon } from './subDocuments/cartoon.schema';
 export class ResultService {
   constructor(@InjectModel(Result.name) private resultModel: Model<ResultDocument>) {}
 
-  async create(chatRoomId: string, cartoon: any): Promise<Result> {
-    return (await this.resultModel.create([{ chatRoomId, cartoon }]))?.[0];
+  async create(chatRoomId: string, report, cartoon: any): Promise<Result> {
+    return (await this.resultModel.create([{ chatRoomId, report, cartoon }]))?.[0];
   }
 
   async findById(id: string): Promise<Result> {
     return this.resultModel.findById(id).exec();
+  }
+
+  createReport({ job, reasons, bestType, strengths, weaknesses, diary, types }) {
+    return {
+      job,
+      reasons: reasons.split(','),
+      bestType,
+      strengths: strengths.split(','),
+      weaknesses: weaknesses.split(','),
+      diary,
+      types,
+    };
   }
 
   makePrompt(senario) {
@@ -30,13 +42,13 @@ export class ResultService {
     };
   }
 
-  async createCartoon(senario): Promise<Cartoon> {
-    const { prompt, negativePrompt } = this.makePrompt(senario);
+  async createCartoon(prompt): Promise<Cartoon> {
     const url = 'https://stablediffusionapi.com/api/v3/text2img';
     const data = {
       key: process.env.STABLE_DIFFUSION_KEY,
       prompt,
-      negative_prompt: negativePrompt,
+      negative_prompt:
+        'low resolution, blurry, worst quality, low quality, huge breasts, nsfw, bad proportions, big eyes, normal quality',
       width: '512',
       safety_checker: 'yes',
       guidance: '7.5',
@@ -55,33 +67,13 @@ export class ResultService {
     if (response.data.status === 'error') {
       throw new InternalServerErrorException(response.data.message);
     }
-    console.log(response);
+
     console.log('stable diffusion output:: ', response.data);
-
-    console.log('response', response);
-
-    // const data = { inputs: prompt };
-    // const response = await fetch(
-    //   'https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5',
-    //   {
-    //     headers: { Authorization: 'Bearer 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' },
-    //     method: 'POST',
-    //     body: JSON.stringify(data),
-    //   },
-    // );
-
-    // const result = await response.blob();
-    // console.log(result);
-    // const buffer = await result.arrayBuffer();
-    // const imageResult = await sharp(buffer).png().toFile('image.png');
-    // console.log('imageResult', imageResult);
 
     return {
       prompt,
-      negativePrompt,
-      // sdId: '1',
+      negativePrompt: 'default',
       sdId: response.data.id,
-      // imageURLs: ['1'],
       imageURLs: response.data.output,
     };
   }

@@ -73,6 +73,7 @@ export class LangchainService {
       this.deleteChain(chatRoomId);
       return 'session finished';
     }
+    console.log('input:  ', input);
     const chain = this.getChain(chatRoomId);
     const { response } = await chain.call({
       input,
