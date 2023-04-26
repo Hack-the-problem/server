@@ -18,7 +18,7 @@ export class Report {
   bestType: string;
 
   @Prop()
-  Types: string[];
+  types: string[];
 
   @Prop()
   strengths: string[];
