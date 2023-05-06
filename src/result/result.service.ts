@@ -11,8 +11,8 @@ import { Cartoon } from './subDocuments/cartoon.schema';
 export class ResultService {
   constructor(@InjectModel(Result.name) private resultModel: Model<ResultDocument>) {}
 
-  async create(chatRoomId: string, report, cartoon: any): Promise<Result> {
-    return (await this.resultModel.create([{ chatRoomId, report, cartoon }]))?.[0];
+  async create(chatRoomId: string, report, cartoons: any): Promise<Result> {
+    return (await this.resultModel.create([{ chatRoomId, report, cartoons }]))?.[0];
   }
 
   async findById(id: string): Promise<Result> {
@@ -31,22 +31,11 @@ export class ResultService {
     };
   }
 
-  makePrompt(senario) {
-    const defaultPrompt =
-      'masterpiece, best quality, extremely detailed CG, beautiful detailed eyes, ultra-detailed, intricate details, 8k wallpaper, elaborate features emma watson ';
-    const defaultNegativePrompt =
-      'low resolution, blurry, worst quality, low quality, huge breasts, nsfw, bad proportions, big eyes, normal quality, ';
-    return {
-      prompt: defaultPrompt + 'backend developer',
-      negativePrompt: defaultNegativePrompt + 'not working alone',
-    };
-  }
-
-  async createCartoon(prompt): Promise<Cartoon> {
+  async createCartoon(job, senario): Promise<Cartoon> {
     const url = 'https://stablediffusionapi.com/api/v3/text2img';
     const data = {
       key: process.env.STABLE_DIFFUSION_KEY,
-      prompt,
+      prompt: `${job} ${senario}, masterpiece, best quality, ultra realistic details, sharp focus, style of webtoon`,
       negative_prompt:
         'low resolution, blurry, worst quality, low quality, huge breasts, nsfw, bad proportions, big eyes, normal quality',
       width: '512',
@@ -71,8 +60,6 @@ export class ResultService {
     console.log('stable diffusion output:: ', response.data);
 
     return {
-      prompt,
-      negativePrompt: 'default',
       sdId: response.data.id,
       imageURLs: response.data.output,
     };

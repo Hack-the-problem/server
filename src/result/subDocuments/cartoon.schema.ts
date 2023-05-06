@@ -13,12 +13,6 @@ export class Cartoon {
 
   @Prop()
   imageURLs: string[];
-
-  @Prop()
-  prompt: string;
-
-  @Prop()
-  negativePrompt: string;
 }
 
 export const CartoonSchema = SchemaFactory.createForClass(Cartoon);
