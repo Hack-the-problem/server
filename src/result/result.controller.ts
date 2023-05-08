@@ -32,6 +32,7 @@ export class ResultController {
       const response = await model.call(input);
       const report = await parser.parse(response);
       const { job, reasons, bestType, strengths, weaknesses, diary, scenarios, types } = report;
+      console.log('report', report);
       const reportObject = this.resultService.createReport({
         job,
         reasons,

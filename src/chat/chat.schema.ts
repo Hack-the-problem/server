@@ -10,10 +10,13 @@ export class Chat {
   _id: Types.ObjectId;
 
   @Prop()
-  input: string;
+  round: number;
 
   @Prop()
-  response: string;
+  question: string;
+
+  @Prop()
+  answer: string;
 
   @Prop({ type: ScoreSchema })
   score?: Score;

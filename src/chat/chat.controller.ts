@@ -3,6 +3,7 @@ import { ChatService } from './chat.service';
 import { ChatRoomService } from 'src/chat-room/chat-room.service';
 import { LangchainService } from 'src/langchain/langchain.service';
 import { ChatResponseDto } from './dto/chat.response.dto';
+import { ChatRoom } from 'src/chat-room/chat-room.schema';
 
 @Controller('chat')
 export class ChatController {
@@ -12,17 +13,18 @@ export class ChatController {
     private readonly langchainService: LangchainService,
   ) {}
 
-  @Post()
-  async postChatInput(@Body() { chatRoomId, input }): Promise<ChatResponseDto> {
-    const response = await this.langchainService.getResponse(chatRoomId, input);
-    const chatObject = await this.chatService.create(input, response);
-
-    const updatedChatRoom = await this.chatRoomService.addChat(chatRoomId, [chatObject._id]);
-
-    return { stage: 1, isFinished: false, data: response };
+  @Get('/question')
+  async getQuestion(@Query('round') round) {
+    return this.chatService.castQuestion(round);
   }
 
-  // @Get('/question')
+  @Post()
+  async createChat(@Body() { chatRoomId, round, answer }): Promise<ChatRoom> {
+    const question = this.chatService.castQuestion(round);
+    const newChat = await this.chatService.create(round, question, answer);
+    console.log('newChat', newChat);
+    return await this.chatRoomService.addChat(chatRoomId, newChat._id);
+  }
 
   @Get()
   async getChatsBy(@Query('chatRoomId') chatRoomId) {
