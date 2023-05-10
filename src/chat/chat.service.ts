@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { LangchainService } from '../langchain/langchain.service';
 import { InjectModel } from '@nestjs/mongoose';
 import { Chat } from './chat.schema';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 
 @Injectable()
 export class ChatService {
@@ -11,8 +11,17 @@ export class ChatService {
     @InjectModel(Chat.name) private chatModel: Model<Chat>,
   ) {}
 
-  async create(round, question, answer) {
-    return (await this.chatModel.create([{ round, question, answer }]))[0];
+  async create(chatObject) {
+    return (await this.chatModel.create([chatObject]))[0];
+  }
+
+  createChatObject({ round, question, answer }) {
+    return {
+      _id: new Types.ObjectId(),
+      round,
+      question,
+      answer,
+    };
   }
 
   async findById(id) {

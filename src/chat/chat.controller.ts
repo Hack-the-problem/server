@@ -1,9 +1,8 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { ChatService } from './chat.service';
 import { ChatRoomService } from 'src/chat-room/chat-room.service';
 import { LangchainService } from 'src/langchain/langchain.service';
-import { ChatResponseDto } from './dto/chat.response.dto';
-import { ChatRoom } from 'src/chat-room/chat-room.schema';
+import { Chat } from './chat.schema';
 
 @Controller('chat')
 export class ChatController {
@@ -12,6 +11,16 @@ export class ChatController {
     private readonly chatRoomService: ChatRoomService,
     private readonly langchainService: LangchainService,
   ) {}
+
+  @Post()
+  async addChat(@Query('chatRoomId') chatRoomId, @Body() createChatDto): Promise<Chat> {
+    const newChatObject = this.chatService.createChatObject(createChatDto);
+    const [newChat, updatedChatRoom] = await Promise.all([
+      await this.chatService.create(newChatObject),
+      await this.chatRoomService.addChat(chatRoomId, newChatObject._id),
+    ]);
+    return newChat;
+  }
 
   @Get('/question')
   async getQuestion(@Query('round') round) {
