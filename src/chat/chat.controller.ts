@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, InternalServerErrorException, Post, Query } from '@nestjs/common';
 import { ChatService } from './chat.service';
 import { ChatRoomService } from 'src/chat-room/chat-room.service';
 import { LangchainService } from 'src/langchain/langchain.service';
@@ -13,12 +13,14 @@ export class ChatController {
   ) {}
 
   @Post()
-  async addChat(@Query('chatRoomId') chatRoomId, @Body() createChatDto): Promise<Chat> {
-    const newChatObject = this.chatService.createChatObject(createChatDto);
+  async addChat(@Body() { chatRoomId, round, question, answer }): Promise<Chat> {
+    const newChatObject = this.chatService.createChatObject({ round, question, answer });
     const [newChat, updatedChatRoom] = await Promise.all([
-      await this.chatService.create(newChatObject),
-      await this.chatRoomService.addChat(chatRoomId, newChatObject._id),
+      this.chatService.create(newChatObject),
+      this.chatRoomService.addChat(chatRoomId, newChatObject._id),
     ]);
+    if (!updatedChatRoom.chatIds.some((chatId) => chatId !== newChatObject._id))
+      throw InternalServerErrorException;
     return newChat;
   }
 
