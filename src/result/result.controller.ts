@@ -23,10 +23,15 @@ export class ResultController {
 
   // @UseGuards(JwtAuthGuard)
   @Post()
-  async createCounselReport(@Body() { chatRoomId, counsels }) {
+  async createCounselReport(@Body() { chatRoomId }) {
     try {
-      // const counsels = await this.chatService.findBy({ chatRoomId });
-      console.log('counsels', counsels);
+      const chatIds = await this.chatRoomService.getChatIds(chatRoomId);
+      const chats = await this.chatService.findBy({ _id: { $in: chatIds } });
+      const counsels = JSON.stringify(
+        chats.map(({ question, answer }) => {
+          return { question, answer };
+        }),
+      );
       const parser = this.langchainService.parser;
       const prompt = this.langchainService.createReportPrompt();
       const input = await prompt.format({ counsels });
@@ -34,7 +39,6 @@ export class ResultController {
       const response = await model.call(input);
       const report = await parser.parse(response);
       const { job, reasons, bestType, strengths, weaknesses, diary, scenarios, types } = report;
-      console.log('report', report);
       const reportObject = this.resultService.createReport({
         job,
         reasons,
