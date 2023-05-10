@@ -25,6 +25,8 @@ export class ResultController {
   @Post()
   async createCounselReport(@Body() { chatRoomId, counsels }) {
     try {
+      // const counsels = await this.chatService.findBy({ chatRoomId });
+      console.log('counsels', counsels);
       const parser = this.langchainService.parser;
       const prompt = this.langchainService.createReportPrompt();
       const input = await prompt.format({ counsels });

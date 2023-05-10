@@ -1,14 +1,16 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ChatRoomService } from './chat-room.service';
 import { ChatRoomController } from './chat-room.controller';
 import { ChatRoom, ChatRoomSchema } from './chat-room.schema';
 import { LangchainModule } from 'src/langchain/langchain.module';
+import { ChatModule } from 'src/chat/chat.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: ChatRoom.name, schema: ChatRoomSchema }]),
     LangchainModule,
+    forwardRef(() => ChatModule),
   ],
   controllers: [ChatRoomController],
   providers: [ChatRoomService],

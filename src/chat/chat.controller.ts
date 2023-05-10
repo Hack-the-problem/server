@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { ChatService } from './chat.service';
 import { ChatRoomService } from 'src/chat-room/chat-room.service';
 import { LangchainService } from 'src/langchain/langchain.service';
@@ -18,18 +18,9 @@ export class ChatController {
     return this.chatService.castQuestion(round);
   }
 
-  @Post()
-  async createChat(@Body() { chatRoomId, round, answer }): Promise<ChatRoom> {
-    const question = this.chatService.castQuestion(round);
-    const newChat = await this.chatService.create(round, question, answer);
-    console.log('newChat', newChat);
-    return await this.chatRoomService.addChat(chatRoomId, newChat._id);
-  }
-
   @Get()
-  async getChatsBy(@Query('chatRoomId') chatRoomId) {
+  async getChatsByChatRoomId(@Query('chatRoomId') chatRoomId) {
     const chatIds = await this.chatRoomService.getChatIds(chatRoomId);
-    const chats = await this.chatService.findBy({ _id: { $in: chatIds } });
-    return chats;
+    return await this.chatService.findBy({ _id: { $in: chatIds } });
   }
 }

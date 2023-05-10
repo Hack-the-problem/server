@@ -16,11 +16,11 @@ export class ChatService {
   }
 
   async findById(id) {
-    return await this.chatModel.findById(id);
+    return await this.chatModel.findById(id).lean();
   }
 
   async findBy(filter) {
-    return await this.chatModel.find(filter);
+    return await this.chatModel.find(filter).lean();
   }
 
   castQuestion(round) {
