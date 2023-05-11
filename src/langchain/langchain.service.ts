@@ -9,7 +9,7 @@ import {
   PromptTemplate,
 } from 'langchain/prompts';
 import { StructuredOutputParser } from 'langchain/output_parsers';
-import { BufferWindowMemory, ConversationSummaryMemory } from 'langchain/memory';
+import { BufferWindowMemory } from 'langchain/memory';
 import { CallbackManager } from 'langchain/callbacks';
 import { OpenAI } from 'langchain/llms/openai';
 
@@ -87,17 +87,17 @@ export class LangchainService {
   public parser = StructuredOutputParser.fromNamesAndDescriptions({
     job: 'the best job AI recommend',
     reasons: 'top three reasons why AI recommended the job',
-    bestType: 'best RIASEC type within [R, I, A, S, E, C]',
+    bestType: `best RIASEC type. answer exact type name. example: 'R'`,
     strengths: `three strengths of the client's RIASEC best type`,
     weaknesses: `three weaknesses of the client's RIASEC best type`,
     diary: `the recommended career youngman's diary of for sentences. Each sentence's timeline goes by morning, lunch, afternoon, afterwork.`,
     scenarios: `four scenarios of the recommended career youngman with only gerund. Each scenario's timeline goes by morning, lunch, afternoon, afterwork but the time is not written in the sentence.`,
-    types: `top three RIASEC types within [R, I, A, S, E, C]`,
+    types: `top three RIASEC types. answer exact type names. example: 'R, I, A'`,
   });
 
   createReportPrompt() {
     return new PromptTemplate({
-      template: `Make career counseling report as best as possible. \n{format_instructions}\n{counsels}`,
+      template: `Make career counseling report as best as possibler. \n{format_instructions}\n{counsels}`,
       inputVariables: ['counsels'],
       partialVariables: { format_instructions: this.parser.getFormatInstructions() },
     });

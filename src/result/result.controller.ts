@@ -37,8 +37,11 @@ export class ResultController {
       const input = await prompt.format({ counsels });
       const model = this.langchainService.createModel();
       const response = await model.call(input);
+      console.log('response', response);
       const report = await parser.parse(response);
       const { job, reasons, bestType, strengths, weaknesses, diary, scenarios, types } = report;
+      console.log('bestType', bestType);
+      console.log('types', types);
       const reportObject = this.resultService.createReport({
         job,
         reasons,

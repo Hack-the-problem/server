@@ -3,7 +3,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Result, ResultDocument } from './result.schema';
 import axios from 'axios';
-import sharp from 'sharp';
 
 import { Cartoon } from './subDocuments/cartoon.schema';
 
@@ -27,7 +26,7 @@ export class ResultService {
       strengths: strengths.split(','),
       weaknesses: weaknesses.split(','),
       diary,
-      types,
+      types: types.split(','),
     };
   }
 
