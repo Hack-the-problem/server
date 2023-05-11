@@ -49,19 +49,27 @@ export class ResultService {
       track_id: null,
     };
 
-    const response = await axios.post(url, data, {
-      headers: { 'Content-Type': 'application/json' },
-    });
+    try {
+      const response = await axios.post(url, data, {
+        headers: { 'Content-Type': 'application/json' },
+      });
 
-    if (response.data.status === 'error') {
-      throw new InternalServerErrorException(response.data.message);
+      if (response.data.status === 'error') {
+        throw new InternalServerErrorException(response.data.message);
+      }
+
+      console.log('stable diffusion output:: ', response.data);
+
+      return {
+        sdId: response.data.id,
+        imageURLs: response.data.output,
+      };
+    } catch (err) {
+      console.log(err);
+      return {
+        sdId: null,
+        imageURLs: ['api limit exceeded'],
+      };
     }
-
-    console.log('stable diffusion output:: ', response.data);
-
-    return {
-      sdId: response.data.id,
-      imageURLs: response.data.output,
-    };
   }
 }
