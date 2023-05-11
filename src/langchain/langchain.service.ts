@@ -90,8 +90,8 @@ export class LangchainService {
     bestType: 'best RIASEC type within [R, I, A, S, E, C]',
     strengths: `three strengths of the client's RIASEC best type`,
     weaknesses: `three weaknesses of the client's RIASEC best type`,
-    diary: `the recommended career youngman's diary of for sentences. Each sentence's timeline goes by morning, lunch, dinner, afterwork.`,
-    scenarios: `four scenarios of the recommended career youngman with only gerund. Each scenario's timeline goes by morning, lunch, dinner, afterwork but the time is not written in the sentence.`,
+    diary: `the recommended career youngman's diary of for sentences. Each sentence's timeline goes by morning, lunch, afternoon, afterwork.`,
+    scenarios: `four scenarios of the recommended career youngman with only gerund. Each scenario's timeline goes by morning, lunch, afternoon, afterwork but the time is not written in the sentence.`,
     types: `top three RIASEC types within [R, I, A, S, E, C]`,
   });
 
