@@ -27,7 +27,7 @@ export class Report {
   weaknesses: string[];
 
   @Prop()
-  diary: string;
+  diary: string[];
 }
 
 export const ReportSchema = SchemaFactory.createForClass(Report);

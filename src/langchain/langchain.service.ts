@@ -12,6 +12,7 @@ import { StructuredOutputParser } from 'langchain/output_parsers';
 import { BufferWindowMemory } from 'langchain/memory';
 import { CallbackManager } from 'langchain/callbacks';
 import { OpenAI } from 'langchain/llms/openai';
+import { z } from 'zod';
 
 @Injectable()
 export class LangchainService {
@@ -84,26 +85,42 @@ export class LangchainService {
     return response;
   }
 
-  public parser = StructuredOutputParser.fromNamesAndDescriptions({
-    job: 'the best job AI recommend',
-    reasons: 'top three reasons why AI recommended the job',
-    bestType: `best RIASEC type. answer exact type name. example: 'R'`,
-    strengths: `three strengths of the client's RIASEC best type`,
-    weaknesses: `three weaknesses of the client's RIASEC best type`,
-    diary: `the recommended career youngman's diary of for sentences. Each sentence's timeline goes by morning, lunch, afternoon, afterwork.`,
-    scenarios: `four scenarios of the recommended career youngman with only gerund. Each scenario's timeline goes by morning, lunch, afternoon, afterwork but the time is not written in the sentence.`,
-    types: `top three RIASEC types. answer exact type names. example: 'R, I, A'`,
-  });
+  public resultParser = StructuredOutputParser.fromZodSchema(
+    z.object({
+      job: z.string().describe('the best job AI recommend'),
+      reasons: z.array(z.string()).describe('top three reasons why AI recommended the job'),
+      bestType: z.string().describe(`best RIASEC type. answer exact type name. example: 'R'`),
+      types: z
+        .array(z.string())
+        .describe(`top three RIASEC types. answer exact type's capital letter.`),
+      strengths: z.array(z.string()).describe(`three strengths of the client's RIASEC best type`),
+      weaknesses: z.array(z.string()).describe(`three weaknesses of the client's RIASEC best type`),
+      diary: z.array(z.string()).describe(`
+          the recommended career youngman's diary in four sentences.
+          each sentence describe different timeline in self-reflective tone.
+          diary start in morning and end in afterwork.
+          `),
+      scenarios: z.array(z.string()).describe(`
+          four scenarios of the recommended career youngman with only gerund. 
+          Each scenario's timeline is morning, lunch, afternoon, afterwork but the time is not written in the sentence.
+          `),
+    }),
+  );
 
   createReportPrompt() {
     return new PromptTemplate({
-      template: `Make career counseling report as best as possibler. \n{format_instructions}\n{counsels}`,
+      template: `Make career counseling report in english as best as possible. \n{format_instructions}\n{counsels}`,
       inputVariables: ['counsels'],
-      partialVariables: { format_instructions: this.parser.getFormatInstructions() },
+      partialVariables: { format_instructions: this.resultParser.getFormatInstructions() },
     });
   }
 
   createModel() {
-    return new OpenAI({ temperature: 0, cache: true, openAIApiKey: process.env.OPEN_API_KEY });
+    return new OpenAI({
+      temperature: 0,
+      cache: true,
+      modelName: 'gpt-3.5-turbo',
+      openAIApiKey: process.env.OPEN_API_KEY,
+    });
   }
 }

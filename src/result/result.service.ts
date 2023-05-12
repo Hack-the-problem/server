@@ -21,12 +21,12 @@ export class ResultService {
   createReport({ job, reasons, bestType, strengths, weaknesses, diary, types }) {
     return {
       job,
-      reasons: reasons.split(','),
+      reasons,
       bestType,
-      strengths: strengths.split(','),
-      weaknesses: weaknesses.split(','),
+      strengths,
+      weaknesses,
       diary,
-      types: types.split(','),
+      types,
     };
   }
 

@@ -32,16 +32,16 @@ export class ResultController {
           return { question, answer };
         }),
       );
-      const parser = this.langchainService.parser;
+      const parser = this.langchainService.resultParser;
       const prompt = this.langchainService.createReportPrompt();
+
       const input = await prompt.format({ counsels });
       const model = this.langchainService.createModel();
       const response = await model.call(input);
-      console.log('response', response);
+
       const report = await parser.parse(response);
       const { job, reasons, bestType, strengths, weaknesses, diary, scenarios, types } = report;
-      console.log('bestType', bestType);
-      console.log('types', types);
+
       const reportObject = this.resultService.createReport({
         job,
         reasons,
@@ -52,7 +52,7 @@ export class ResultController {
         types,
       });
       const cartoonObjects = await Promise.all([
-        ...scenarios.split(',').map((scenario) => this.resultService.createCartoon(job, scenario)),
+        ...scenarios.map((scenario) => this.resultService.createCartoon(job, scenario)),
       ]);
       return await this.resultService.create(chatRoomId, reportObject, cartoonObjects);
     } catch (err) {
