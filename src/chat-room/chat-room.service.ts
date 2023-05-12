@@ -26,4 +26,13 @@ export class ChatRoomService {
       { new: true },
     );
   }
+
+  async updateIsFinished(_id, isFinished) {
+    return await this.chatRoomModel.findOneAndUpdate(
+      { _id },
+      { isFinished },
+      { new: true },
+      //
+    );
+  }
 }

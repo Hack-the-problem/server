@@ -17,6 +17,9 @@ export class ChatRoom {
 
   @Prop({ type: CounselSchema })
   counsels?: Counsel[];
+
+  @Prop({ default: false })
+  isFinished: boolean;
 }
 
 export const ChatRoomSchema = SchemaFactory.createForClass(ChatRoom);
