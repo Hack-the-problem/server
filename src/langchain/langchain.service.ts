@@ -93,17 +93,22 @@ export class LangchainService {
       types: z
         .array(z.string())
         .describe(`top three RIASEC types. answer exact type's capital letter.`),
-      strengths: z.array(z.string()).describe(`three strengths of the client's RIASEC best type`),
-      weaknesses: z.array(z.string()).describe(`three weaknesses of the client's RIASEC best type`),
-      diary: z.array(z.string()).describe(`
-          the recommended career youngman's diary in four sentences.
-          each sentence describe different timeline in self-reflective tone.
-          diary start in morning and end in afterwork.
-          `),
-      scenarios: z.array(z.string()).describe(`
-          four scenarios of the recommended career youngman with only gerund. 
-          Each scenario's timeline is morning, lunch, afternoon, afterwork but the time is not written in the sentence.
-          `),
+      strengths: z
+        .array(z.string())
+        .describe(`three strengths of the client's RIASEC best type in short sentence`),
+      weaknesses: z
+        .array(z.string())
+        .describe(`three weaknesses of the client's RIASEC best type in short sentence`),
+      diary: z
+        .array(z.string())
+        .describe(
+          `the recommended career youngman's diary in four sentences. each sentence describe different timeline in self-reflective tone. diary start in morning and end in afterwork.`,
+        ),
+      scenarios: z
+        .array(z.string())
+        .describe(
+          `four scenarios of the recommended career youngman with only gerund. Each scenario's timeline is morning, lunch, afternoon, afterwork but the time is not written in the sentence.`,
+        ),
     }),
   );
 
