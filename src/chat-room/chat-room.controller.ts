@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Query } from '@nestjs/common';
 import { ChatRoomService } from './chat-room.service';
 import { LangchainService } from 'src/langchain/langchain.service';
 
@@ -25,8 +25,9 @@ export class ChatRoomController {
     return await this.chatRoomService.findById(chatRoomId);
   }
 
-  @Post()
+  @Put()
   async updateChatRoom(@Query('chatRoomId') chatRoomId, @Body() { isFinished }) {
+    console.log('isFinished', isFinished);
     return await this.chatRoomService.updateIsFinished(chatRoomId, isFinished);
   }
 }
