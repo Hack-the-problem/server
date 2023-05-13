@@ -21,9 +21,9 @@ export class AuthController {
     }
     const accessToken = await this.authService.createToken(req.user);
     if (req.user.status !== 'done') {
-      return res.cookie('token', accessToken).redirect(`${process.env.CLIENT_URL}/register`);
+      return res.redirect(`${process.env.CLIENT_URL}/register?token=${accessToken}`);
     } else {
-      return res.cookie('token', accessToken).redirect(`${process.env.CLIENT_URL}/main`);
+      return res.redirect(`${process.env.CLIENT_URL}/main?token=${accessToken}`);
     }
   }
 
