@@ -11,6 +11,9 @@ export class Comment {
   @Prop({ type: SchemaTypes.ObjectId })
   userId: Types.ObjectId;
 
+  @Prop({ type: SchemaTypes.String })
+  nickname: string;
+
   @Prop({ type: SchemaTypes.ObjectId })
   resultId: Types.ObjectId;
 

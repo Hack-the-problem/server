@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Model, Types } from 'mongoose';
+import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Comment } from './comment.schema';
 
@@ -7,7 +7,11 @@ import { Comment } from './comment.schema';
 export class CommentService {
   constructor(@InjectModel(Comment.name) private commentModel: Model<Comment>) {}
 
-  async create(userId, resultId) {
-    return (await this.commentModel.create([{ userId, resultId }]))[0];
+  async create(createUserDto) {
+    return (await this.commentModel.create([createUserDto]))[0];
+  }
+
+  async findAllByFilter(filter) {
+    return await this.commentModel.find(filter).lean();
   }
 }

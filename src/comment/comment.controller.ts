@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { CommentService } from './comment.service';
 
 @Controller('comment')
@@ -6,7 +6,12 @@ export class CommentController {
   constructor(private readonly commentService: CommentService) {}
 
   @Post()
-  create(@Body() { userId, resultId }) {
-    return this.commentService.create(userId, resultId);
+  create(@Body() createUserDto) {
+    return this.commentService.create(createUserDto);
+  }
+
+  @Get()
+  getCommentByResultId(@Query('resultId') resultId) {
+    return this.commentService.findAllByFilter({ resultId });
   }
 }
