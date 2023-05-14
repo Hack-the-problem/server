@@ -126,6 +126,7 @@ export class LangchainService {
       cache: true,
       modelName: 'gpt-3.5-turbo',
       openAIApiKey: process.env.OPEN_API_KEY,
+      maxTokens: -1,
     });
   }
 }
