@@ -21,7 +21,6 @@ export class ResultController {
     return await this.resultService.findById(id);
   }
 
-  // @UseGuards(JwtAuthGuard)
   @Post()
   async createCounselReport(@Body() { chatRoomId }) {
     try {

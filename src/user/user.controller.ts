@@ -58,7 +58,7 @@ export class UserController {
   @Put('/profile')
   async updateMyInfo(@Request() req, @Body() updateUserDto: UpdateUserDto, @Res() res: Response) {
     const updatedUser = await this.userService.update(req.user._id, updateUserDto);
-    const accessToken = this.authService.createToken(updatedUser);
-    return res.cookie('token', accessToken).send(updatedUser);
+    const accessToken = await this.authService.createToken(updatedUser);
+    return res.send({ token: accessToken });
   }
 }

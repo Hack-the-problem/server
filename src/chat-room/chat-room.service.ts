@@ -7,8 +7,8 @@ import { ChatRoom } from './chat-room.schema';
 export class ChatRoomService {
   constructor(@InjectModel(ChatRoom.name) private chatRoomModel: Model<ChatRoom>) {}
 
-  async create(): Promise<ChatRoom> {
-    return (await this.chatRoomModel.create([{ _id: new Types.ObjectId() }]))[0];
+  async create(userId): Promise<ChatRoom> {
+    return (await this.chatRoomModel.create([{ _id: new Types.ObjectId(), userId }]))[0];
   }
 
   async findById(id) {

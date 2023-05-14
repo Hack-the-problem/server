@@ -10,4 +10,8 @@ export class AuthService {
     const payload = { sub: user._id, status: user.status };
     return this.jwtService.sign(payload, { secret: process.env.JWT_SECRET });
   }
+
+  async decodeToken(token) {
+    return this.jwtService.decode(token);
+  }
 }

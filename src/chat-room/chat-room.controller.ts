@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put, Query, Req, UseGuards } from '@nestjs/common';
 import { ChatRoomService } from './chat-room.service';
 import { LangchainService } from 'src/langchain/langchain.service';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 
 @Controller('chat-room')
 export class ChatRoomController {
@@ -9,9 +10,11 @@ export class ChatRoomController {
     private readonly langchainService: LangchainService,
   ) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
-  async create() {
-    const newChatRoom = await this.chatRoomService.create();
+  async create(@Req() request) {
+    const user = request.user;
+    const newChatRoom = await this.chatRoomService.create(user._id);
     return newChatRoom;
   }
 
