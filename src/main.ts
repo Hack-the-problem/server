@@ -10,6 +10,6 @@ async function bootstrap() {
     cors: true,
     logger: new CustomLogger(slackService),
   });
-  await app.listen(3000);
+  await app.listen(process.env.PORT);
 }
 bootstrap();
