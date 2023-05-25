@@ -33,4 +33,9 @@ export class ChatRoomController {
     console.log('isFinished', isFinished);
     return await this.chatRoomService.updateIsFinished(chatRoomId, isFinished);
   }
+
+  @Get('/question')
+  async getQuestion(@Query('round') round) {
+    return this.chatRoomService.castQuestion(round);
+  }
 }

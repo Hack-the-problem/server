@@ -24,11 +24,6 @@ export class ChatController {
     return newChat;
   }
 
-  @Get('/question')
-  async getQuestion(@Query('round') round) {
-    return this.chatService.castQuestion(round);
-  }
-
   @Get()
   async getChatsByChatRoomId(@Query('chatRoomId') chatRoomId) {
     const chatIds = await this.chatRoomService.getChatIds(chatRoomId);
