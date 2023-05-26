@@ -3,7 +3,7 @@ import { ResultService } from './result.service';
 import { ResultController } from './result.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Result, ResultSchema } from './result.schema';
-import { LangchainModule } from 'src/langchain/langchain.module';
+import { LangchainModule } from 'src/lib/langchain/langchain.module';
 import { ChatModule } from 'src/chat/chat.module';
 import { ChatRoomModule } from 'src/chat-room/chat-room.module';
 import { UserModule } from 'src/user/user.module';

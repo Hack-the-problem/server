@@ -2,21 +2,13 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER } from '@nestjs/core';
 import { MongooseModule } from '@nestjs/mongoose';
-import { PassportModule } from '@nestjs/passport';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { ChatRoomModule } from './chat-room/chat-room.module';
-import { ChatModule } from './chat/chat.module';
-import { LangchainModule } from './langchain/langchain.module';
-import { LoggerMiddleware } from './utils/loggers/request.logger.middleware';
-import { AuthModule } from './auth/auth.module';
-import { UserModule } from './user/user.module';
-import { ResultModule } from './result/result.module';
-import { CommentModule } from './comment/comment.module';
-import { SlackExceptionFilter } from './utils/slack/slack.exception.filter';
-import { SlackModule } from './utils/slack/slack.module';
-import { SlackService } from './utils/slack/slack.service';
-import { CustomLogger } from './utils/loggers/customLogger.service';
+import { LangchainModule } from './lib/langchain/langchain.module';
+import { LoggerMiddleware } from './lib/loggers/request.logger.middleware';
+import { SlackExceptionFilter } from './lib/slack/slack.exception.filter';
+import { SlackModule } from './lib/slack/slack.module';
+import { SlackService } from './lib/slack/slack.service';
+import { CustomLogger } from './lib/loggers/customLogger.service';
+import { ApiModule } from './api/api.module';
 
 @Module({
   imports: [
@@ -26,19 +18,11 @@ import { CustomLogger } from './utils/loggers/customLogger.service';
       envFilePath: '.env',
     }),
     MongooseModule.forRoot(process.env.MONGO_URI),
-    ChatRoomModule,
-    ChatModule,
+    ApiModule,
     LangchainModule,
-    PassportModule,
-    AuthModule,
-    UserModule,
-    ResultModule,
-    CommentModule,
     SlackModule,
   ],
-  controllers: [AppController],
   providers: [
-    AppService,
     SlackService,
     CustomLogger,
     {

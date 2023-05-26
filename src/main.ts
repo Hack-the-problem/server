@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { CustomLogger } from './utils/loggers/customLogger.service';
-import { SlackService } from './utils/slack/slack.service';
+import { CustomLogger } from './lib/loggers/customLogger.service';
+import { SlackService } from './lib/slack/slack.service';
 
 async function bootstrap() {
   const appContext = await NestFactory.createApplicationContext(AppModule);

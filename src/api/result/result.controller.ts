@@ -4,7 +4,7 @@ import { Result } from './result.schema';
 import { LangchainService } from 'src/langchain/langchain.service';
 import { ChatService } from 'src/chat/chat.service';
 import { ChatRoomService } from 'src/chat-room/chat-room.service';
-import { UserService } from 'src/user/user.service';
+import { UserService } from 'src/api/user/user.service';
 
 @Controller('result')
 export class ResultController {

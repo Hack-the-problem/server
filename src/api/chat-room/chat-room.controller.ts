@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post, Put, Query, Req, UseGuards } from '@nestjs/common';
 import { ChatRoomService } from './chat-room.service';
 import { LangchainService } from 'src/langchain/langchain.service';
-import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/api/utils/guard/jwt-auth.guard';
 
 @Controller('chat-room')
 export class ChatRoomController {

@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/api/utils/guard/jwt-auth.guard';
 import { CreateUserDto } from './dto/create-user.dto';
 import { Response } from 'express';
 import { AuthService } from 'src/auth/auth.service';
