@@ -1,15 +1,13 @@
 import { Body, Controller, Get, InternalServerErrorException, Post, Query } from '@nestjs/common';
-import { ChatService } from './chat.service';
-import { ChatRoomService } from 'src/chat-room/chat-room.service';
-import { LangchainService } from 'src/langchain/langchain.service';
 import { Chat } from './chat.schema';
+import { ChatService } from './chat.service';
+import { ChatRoomService } from '../chat-room/chat-room.service';
 
 @Controller('chat')
 export class ChatController {
   constructor(
     private readonly chatService: ChatService,
     private readonly chatRoomService: ChatRoomService,
-    private readonly langchainService: LangchainService,
   ) {}
 
   @Post()

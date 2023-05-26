@@ -14,7 +14,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from 'src/api/utils/guard/jwt-auth.guard';
 import { CreateUserDto } from './dto/create-user.dto';
 import { Response } from 'express';
-import { AuthService } from 'src/auth/auth.service';
+import { AuthService } from '../auth/auth.service';
 
 @Controller('user')
 export class UserController {

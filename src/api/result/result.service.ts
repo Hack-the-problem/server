@@ -1,9 +1,9 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Result, ResultDocument } from './result.schema';
 import axios from 'axios';
 
+import { Result, ResultDocument } from './result.schema';
 import { Cartoon } from './subDocuments/cartoon.schema';
 
 @Injectable()

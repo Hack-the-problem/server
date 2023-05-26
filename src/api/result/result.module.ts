@@ -1,17 +1,16 @@
 import { Module } from '@nestjs/common';
-import { ResultService } from './result.service';
-import { ResultController } from './result.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Result, ResultSchema } from './result.schema';
+import { ResultController } from './result.controller';
+import { ResultService } from './result.service';
+
+import { ChatModule } from 'src/api/chat/chat.module';
+import { ChatRoomModule } from 'src/api/chat-room/chat-room.module';
 import { LangchainModule } from 'src/lib/langchain/langchain.module';
-import { ChatModule } from 'src/chat/chat.module';
-import { ChatRoomModule } from 'src/chat-room/chat-room.module';
-import { UserModule } from 'src/user/user.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Result.name, schema: ResultSchema }]),
-    UserModule,
     ChatModule,
     ChatRoomModule,
     LangchainModule,

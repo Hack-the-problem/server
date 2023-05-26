@@ -1,16 +1,14 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { ResultService } from './result.service';
 import { Result } from './result.schema';
-import { LangchainService } from 'src/langchain/langchain.service';
-import { ChatService } from 'src/chat/chat.service';
-import { ChatRoomService } from 'src/chat-room/chat-room.service';
-import { UserService } from 'src/api/user/user.service';
+import { ResultService } from './result.service';
+import { ChatService } from '../chat/chat.service';
+import { ChatRoomService } from '../chat-room/chat-room.service';
+import { LangchainService } from 'src/lib/langchain/langchain.service';
 
 @Controller('result')
 export class ResultController {
   constructor(
     private readonly resultService: ResultService,
-    private readonly userService: UserService,
     private readonly chatService: ChatService,
     private readonly chatRoomService: ChatRoomService,
     private readonly langchainService: LangchainService,

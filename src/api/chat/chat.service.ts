@@ -1,15 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { LangchainService } from '../langchain/langchain.service';
 import { InjectModel } from '@nestjs/mongoose';
 import { Chat } from './chat.schema';
 import { Model, Types } from 'mongoose';
 
 @Injectable()
 export class ChatService {
-  constructor(
-    private readonly langchainService: LangchainService,
-    @InjectModel(Chat.name) private chatModel: Model<Chat>,
-  ) {}
+  constructor(@InjectModel(Chat.name) private chatModel: Model<Chat>) {}
 
   async create(chatObject) {
     return (await this.chatModel.create([chatObject]))[0];
