@@ -12,7 +12,7 @@ export class ChatRoomService {
   }
 
   async findById(id) {
-    return await this.chatRoomModel.findById(id);
+    return await this.chatRoomModel.findById(id).lean();
   }
 
   async getChatIds(id) {

@@ -4,6 +4,7 @@ import { ResultService } from './result.service';
 import { ChatService } from '../chat/chat.service';
 import { ChatRoomService } from '../chat-room/chat-room.service';
 import { LangchainService } from 'src/lib/langchain/langchain.service';
+import { ChatRoom } from '../chat-room/chat-room.schema';
 
 @Controller('result')
 export class ResultController {
@@ -22,7 +23,8 @@ export class ResultController {
   @Post()
   async createCounselReport(@Body() { chatRoomId }) {
     try {
-      const chatIds = await this.chatRoomService.getChatIds(chatRoomId);
+      const chatRoom: ChatRoom = await this.chatRoomService.findById(chatRoomId);
+      const { userId, chatIds } = chatRoom;
       const chats = await this.chatService.findBy({ _id: { $in: chatIds } });
       const counsels = JSON.stringify(
         chats.map(({ question, answer }) => {
@@ -51,7 +53,7 @@ export class ResultController {
       const cartoonObjects = await Promise.all([
         ...scenarios.map((scenario) => this.resultService.createCartoon(job, scenario)),
       ]);
-      return await this.resultService.create(chatRoomId, reportObject, cartoonObjects);
+      return await this.resultService.create(userId, reportObject, cartoonObjects);
     } catch (err) {
       console.log(err);
     }

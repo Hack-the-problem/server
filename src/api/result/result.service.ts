@@ -10,8 +10,8 @@ import { Cartoon } from './subDocuments/cartoon.schema';
 export class ResultService {
   constructor(@InjectModel(Result.name) private resultModel: Model<ResultDocument>) {}
 
-  async create(chatRoomId: string, report, cartoons: any): Promise<Result> {
-    return (await this.resultModel.create([{ chatRoomId, report, cartoons }]))?.[0];
+  async create(userId, report, cartoons: any): Promise<Result> {
+    return (await this.resultModel.create([{ userId, report, cartoons }]))?.[0];
   }
 
   async findById(id: string): Promise<Result> {

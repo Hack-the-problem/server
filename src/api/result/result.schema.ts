@@ -10,8 +10,8 @@ export class Result {
   @Prop({ type: SchemaTypes.ObjectId, auto: true })
   _id: Types.ObjectId;
 
-  @Prop({ types: Types.ObjectId, ref: 'chatRoom' })
-  chatRoomId: Types.ObjectId;
+  @Prop({ types: Types.ObjectId, ref: 'user' })
+  userId: Types.ObjectId;
 
   @Prop({ types: ReportSchema })
   report: Report;
