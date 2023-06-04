@@ -38,4 +38,9 @@ export class ChatRoomController {
   async getQuestion(@Query('round') round) {
     return this.chatRoomService.castQuestion(round);
   }
+
+  @Get('/questions')
+  async getQuestions() {
+    return this.chatRoomService.castQuestions();
+  }
 }
